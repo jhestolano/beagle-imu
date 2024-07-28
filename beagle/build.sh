@@ -3,9 +3,10 @@
 set -e
 
 [[ -d ./build ]] && rm -rf ./build
+
 echo "building mpu9250 demo..."
-gcc -std=c17 -Wall -Werror -Wpedantic -c mpu9250.c
-gcc -std=c17 -Wall -Werror -Wpedantic -c main.c
+gcc -std=c2x -Wall -Werror -Wpedantic -c mpu9250.c
+gcc -std=c2x -Wall -Werror -Wpedantic -c test_mpu9250.c
 mkdir ./build
 mv *.o ./build
 gcc ./build/mpu9250.o ./build/main.o -o mpu9250
