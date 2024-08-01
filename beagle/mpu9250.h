@@ -94,21 +94,21 @@
 #define MPU9250_REG_ZA_OFFSET_L (0x7Eu)
 #define MPU9250_REG_ADDR_NUM (0x7Du)
 
-#define MPU9250_BUFF(size)                                 \
-  (struct mpu9250_buff) {                                  \
-    .mem = calloc((size), 1u), .cap = (size), .count = 0u, \
+#define MPU9250_BUFF(size)                                                     \
+  (struct mpu9250_buff) {                                                      \
+    .mem = calloc((size), 1u), .cap = (size), .count = 0u,                     \
+  }
+
+#define MPU9250_DEFAULT_CONFIG                                                 \
+  (struct mpu9250_cfg) {                                                       \
+    .dev_name = "/dev/i2c-2", .addr = 0x68u, .nbus = 2u,                       \
+    .gyro_scaling = GYRO_SCALE_1000_DPS, .accel_scaling = ACCEL_SCALE_4_G,     \
   }
 
 struct mpu9250_buff {
-  char* mem;
+  char *mem;
   int cap;
   int count;
-};
-
-struct mu9250_cfg {
-  int fhandle;
-  unsigned int addr;
-  const char* dev_name;
 };
 
 struct vec3u {
@@ -136,7 +136,7 @@ enum gyro_scale {
 };
 
 struct mpu9250_cfg {
-  const char* dev_name;
+  const char *dev_name;
   unsigned int addr;
   unsigned int nbus;
   enum gyro_scale gyro_scaling;
@@ -145,28 +145,28 @@ struct mpu9250_cfg {
 
 struct mpu9250;
 
-struct mpu9250* mpu9250_init(struct mpu9250_cfg cfg);
+struct mpu9250 *mpu9250_init(struct mpu9250_cfg cfg);
 
-int mpu9250_deinit(struct mpu9250* dev);
+int mpu9250_deinit(struct mpu9250 *dev);
 
-int mpu9250_read_reg(struct mpu9250* dev, char reg, char* data);
+int mpu9250_read_reg(struct mpu9250 *dev, char reg, char *data);
 
-int mpu9250_write_reg(struct mpu9250* dev, char reg, char data);
+int mpu9250_write_reg(struct mpu9250 *dev, char reg, char data);
 
-char mpu9250_who_am_i(struct mpu9250* dev);
+char mpu9250_who_am_i(struct mpu9250 *dev);
 
-int mpu9250_read_all(struct mpu9250* dev, struct mpu9250_buff* buff);
+int mpu9250_read_all(struct mpu9250 *dev, struct mpu9250_buff *buff);
 
-int mpu9250_get_accel_data(struct mpu9250* dev, struct vec3u* accel);
+int mpu9250_get_accel_data(struct mpu9250 *dev, struct vec3u *accel);
 
-int mpu9250_get_gyro_data(struct mpu9250* dev, struct vec3u* gyro);
+int mpu9250_get_gyro_data(struct mpu9250 *dev, struct vec3u *gyro);
 
-int mpu9250_get_temp_data(struct mpu9250* dev, unsigned int* temp);
+int mpu9250_get_temp_data(struct mpu9250 *dev, unsigned int *temp);
 
-int mpu9250_get_accel(struct mpu9250* dev, struct vec3f* accel);
+int mpu9250_get_accel(struct mpu9250 *dev, struct vec3f *accel);
 
-int mpu9250_get_gyro(struct mpu9250* dev, struct vec3f* gyro);
+int mpu9250_get_gyro(struct mpu9250 *dev, struct vec3f *gyro);
 
-int mpu9250_get_temp(struct mpu9250* dev, float* temp);
+int mpu9250_get_temp(struct mpu9250 *dev, float *temp);
 
 #endif
