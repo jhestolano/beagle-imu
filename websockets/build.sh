@@ -4,15 +4,20 @@ set -e
 
 [[ -d ./build ]] && rm -rf ./build
 
-clang -Wall -pedantic -Werror -Os \
+clang -std=c2x -pedantic -Werror -Os -Wall \
+	-g3 \
+	-ggdb \
 	-I ../mongoose \
+	-I/opt/homebrew/Cellar/raylib/5.0/include \
 	../mongoose/mongoose.c \
-	client.c -o beagle-imu-client
-
-clang -Wall -pedantic -Werror -Os \
-	-I ../mongoose \
-	../mongoose/mongoose.c \
-	server.c -o beagle-imu-server
+	-L/opt/homebrew/Cellar/raylib/5.0/lib \
+	-lraylib \
+	gui.c \
+	shared_data.c \
+	imu.c \
+	imu_ws.c \
+	main.c \
+	-o beagle-imu-client
 
 [[ -d ./build ]] || mkdir build
-mv beagle-imu-server beagle-imu-client ./build
+mv beagle-imu-client ./build
